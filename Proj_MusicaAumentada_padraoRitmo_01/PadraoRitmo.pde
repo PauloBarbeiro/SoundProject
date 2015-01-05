@@ -3,6 +3,19 @@ class PadraoRitmo{
   int tuio_ID;
   float screen_pos_x;
   float screen_pos_y;
+  int mode = 1; // 1 = play mode
+                // 0 = edit mode
+  
+  
+  float marker_x;
+  float prev_marker_x;
+  
+  
+  Instrumento instrumento;
+  //start position of intrument for editing mode
+  float instrument_start_pos_x;
+  float instrument_start_pos_y;
+  Mark mark_to_edit;
   
   //cada padrão possuirá uma série de marcas: classe Mark
   // cada uma com uma propriedade de posição, duração, escala
@@ -22,9 +35,12 @@ class PadraoRitmo{
 
   void run(){
     for(int i=0 ; i<marcas.length ; i++){
-      marcas[i].run(metro.current_tick /*, this.sine*/);
+      if( this.mode == 1) marcas[i].run(metro.current_tick /*, this.sine*/);
     }
     this.display();
+    if( this.mode == 0 ){
+      this.editMark();
+    }
   }
 
   void updateTuio(TuioObject tobj){
@@ -38,6 +54,14 @@ class PadraoRitmo{
       //println("x: "+tobj.getX()+"   y: "+tobj.getY());
       this.screen_pos_x = width*tobj.getX();
       this.screen_pos_y = height-(height*tobj.getY());
+      
+      //println("ang: "+ang);
+      if( ang < 160 || ang > 200 ){ 
+        this.mode = 0;
+        this.mark_to_edit = this.markSelected();
+      }
+      else{ this.mode = 1; }
+      
     }
     
   }
@@ -60,18 +84,65 @@ class PadraoRitmo{
     strokeWeight(1);
     stroke(255);
     
-    println("=====================================================================");
+    //println("=====================================================================");
     //println(" Larg: "+pr_width+" percent: "+metro.percent_tick+ "  current: "+metro.current_tick);
     float float_tick = metro.current_tick;
     float float_metronomo = metronomo;
-    println(" cicle percent in width: "+ float_tick/float_metronomo);
-    println( "largura/percent: "+ (pr_width/metro.percent_tick) );
+    this.marker_x = (pr_width*(float_tick/float_metronomo));
+    
+    //println(" cicle percent in width: "+ float_tick/float_metronomo);
+    //println( "largura/percent: "+ (pr_width/metro.percent_tick) );
     //println( "position in bar: "+this.screen_pos_x + (pr_width/metro.percent_tick) );
     
-    line(  this.screen_pos_x + (pr_width*(float_tick/float_metronomo)), this.screen_pos_y-10,
-           this.screen_pos_x + (pr_width*(float_tick/float_metronomo)), this.screen_pos_y+10);
+    if( this.mode ==1 ){
+      line(  this.screen_pos_x + this.marker_x, this.screen_pos_y-10,
+             this.screen_pos_x + this.marker_x, this.screen_pos_y+10);
+      this.prev_marker_x = this.marker_x;
+    }
+    else{
+      line(  this.screen_pos_x + this.prev_marker_x, this.screen_pos_y-10,
+             this.screen_pos_x + this.prev_marker_x, this.screen_pos_y+10);
+    }
+  }//display
+  
+  void editMark(){
+    
+    float variation_in_scale = this.instrumento.screen_pos_y - this.instrument_start_pos_y;
+    println("Mark scale: "+ this.mark_to_edit.escala );
+    println("Change mark scale: "+variation_in_scale);
+    
+    int level = int(variation_in_scale / 10);
+    println("Level: "+level);
     
     
+  
+  }
+  
+  
+  Mark markSelected(){
+    Mark mark;
+    
+    for(int i=0 ; i<marcas.length ; i++){
+      
+      float mark_init_pos = this.screen_pos_x+((marcas[i].posicao/1000)*pr_width);
+      float mark_end_pos = (marcas[i].duracao/metronomo)*pr_width;
+      float next_mark_init_pos = 0.0;
+      if( i < marcas.length-1 ) next_mark_init_pos = this.screen_pos_x+((marcas[i+1].posicao/1000)*pr_width);
+      else next_mark_init_pos = this.screen_pos_x+((marcas[0].posicao/1000)*pr_width);
+      
+      if( (this.screen_pos_x + this.prev_marker_x) > mark_init_pos &&
+          /*(this.screen_pos_x + this.prev_marker_x) < mark_end_pos*/
+          (this.screen_pos_x + this.prev_marker_x) < next_mark_init_pos
+          ){
+            mark = (Mark)marcas[i];
+            this.instrument_start_pos_x = this.instrumento.screen_pos_x;
+            this.instrument_start_pos_y = this.instrumento.screen_pos_y;
+            return mark;
+          }
+      
+    }
+    
+    return null;
   }
 
 }//class

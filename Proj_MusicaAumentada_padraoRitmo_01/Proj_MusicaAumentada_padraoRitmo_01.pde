@@ -83,6 +83,10 @@ void setup() {
     metro = new Metronomo();
     pr1 = new PadraoRitmo(5);
     in1 = new Instrumento(2);
+    
+    //connecta padrao e instrumento
+    pr1.instrumento = in1;
+    in1.padrao = pr1;
 }
 
 void draw() {

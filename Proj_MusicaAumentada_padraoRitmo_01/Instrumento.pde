@@ -3,6 +3,8 @@ class Instrumento{
   float screen_pos_x;
   float screen_pos_y;
   
+  PadraoRitmo padrao;
+  
   Instrumento(int id){
   this.id = id;
   }

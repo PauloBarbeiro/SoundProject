@@ -26,4 +26,14 @@ class Mark{
     }
   }
   
+  void changeEscala(int value){
+    if( value > 0 ){
+      int level = value/10;
+      
+    }
+    else{
+      
+    }
+  }//change
+  
 }
