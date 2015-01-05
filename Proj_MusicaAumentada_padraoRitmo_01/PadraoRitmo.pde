@@ -3,6 +3,7 @@ class PadraoRitmo{
   int tuio_ID;
   float screen_pos_x;
   float screen_pos_y;
+  
   //cada padrão possuirá uma série de marcas: classe Mark
   // cada uma com uma propriedade de posição, duração, escala
   Mark[] marcas = new Mark[4];
@@ -55,6 +56,22 @@ class PadraoRitmo{
             (marcas[i].duracao/metronomo)*pr_width,
             pr_height );
     }
+    
+    strokeWeight(1);
+    stroke(255);
+    
+    println("=====================================================================");
+    //println(" Larg: "+pr_width+" percent: "+metro.percent_tick+ "  current: "+metro.current_tick);
+    float float_tick = metro.current_tick;
+    float float_metronomo = metronomo;
+    println(" cicle percent in width: "+ float_tick/float_metronomo);
+    println( "largura/percent: "+ (pr_width/metro.percent_tick) );
+    //println( "position in bar: "+this.screen_pos_x + (pr_width/metro.percent_tick) );
+    
+    line(  this.screen_pos_x + (pr_width*(float_tick/float_metronomo)), this.screen_pos_y-10,
+           this.screen_pos_x + (pr_width*(float_tick/float_metronomo)), this.screen_pos_y+10);
+    
+    
   }
 
 }//class

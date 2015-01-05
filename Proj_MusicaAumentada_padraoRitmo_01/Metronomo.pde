@@ -33,9 +33,10 @@ class Metronomo{
   }
   
   void run(){
-    //this.percent_tick = ( millis()-previous_tempo )/metronomo;
+    
     this.current_tick = ( millis()-previous_tempo );
-
+    this.percent_tick = this.current_tick/metronomo;
+    
     this.radius = this.calcula( millis() );
     //println( "     ----- "+this.current_tick );
     this.display();
