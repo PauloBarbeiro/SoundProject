@@ -14,6 +14,8 @@ Metronomo metro;
 
 //Padroes ritmicos
 PadraoRitmo pr1;
+Instrumento in1;
+
 //dimensão dos padroes ritmicos na tela (width/height) 
 int pr_width = 40;
 int pr_height = 5;
@@ -80,6 +82,7 @@ void setup() {
     
     metro = new Metronomo();
     pr1 = new PadraoRitmo(5);
+    in1 = new Instrumento(2);
 }
 
 void draw() {
@@ -114,7 +117,7 @@ void draw() {
   
   metro.run();
   pr1.run();
-  
+  in1.run();
   
 }
 
@@ -138,7 +141,8 @@ void updateTuioObject (TuioObject tobj) {
   //println("update object "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" angle: "+tobj.getAngle()+" "+tobj.getMotionSpeed()+" "+tobj.getRotationSpeed()+" "+tobj.getMotionAccel()+" "+tobj.getRotationAccel());
 
   pr1.updateTuio(tobj);
-
+  in1.updateTuio(tobj);
+  
   //valores básicos
   float ang = (360*tobj.getAngle())/6.28;
   ang_before = current_ang;

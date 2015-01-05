@@ -2,7 +2,7 @@ SoundProject
 ============
 
 A simple sound software to help in teaching music principles.
-Each folder is one step in development.
+(Each folder is one step in development. Archived for teaching purposes)
 
 
 Tools
