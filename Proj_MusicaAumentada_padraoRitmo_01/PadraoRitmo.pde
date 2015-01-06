@@ -15,6 +15,7 @@ class PadraoRitmo{
   //start position of intrument for editing mode
   float instrument_start_pos_x;
   float instrument_start_pos_y;
+  PVector start_ins_from_center;
   Mark mark_to_edit;
   
   //cada padrão possuirá uma série de marcas: classe Mark
@@ -76,7 +77,7 @@ class PadraoRitmo{
     for(int i=0 ; i<marcas.length ; i++){
       //marcas[i].run(metro.current_tick /*, this.sine*/);
       rect( this.screen_pos_x+((marcas[i].posicao/1000)*pr_width),
-            this.screen_pos_y,
+            this.screen_pos_y-(marcas[i].posicao_visual_y),
             (marcas[i].duracao/metronomo)*pr_width,
             pr_height );
     }
@@ -107,14 +108,20 @@ class PadraoRitmo{
   
   void editMark(){
     
-    float variation_in_scale = this.instrumento.screen_pos_y - this.instrument_start_pos_y;
-    println("Mark scale: "+ this.mark_to_edit.escala );
-    println("Change mark scale: "+variation_in_scale);
+    //PVector ins_start_pos = new PVector(this.instrument_start_pos_x, this.instrument_start_pos_y);
+    PVector ins_from_center = PVector.sub( screenCenter, this.instrumento.pos );  
+    //PVector ins_from_start = PVector.sub( ins_start_pos, ins_from_center );
+    //println("mag from center: "+ ins_from_center.mag() );
+    float x =  (ins_from_center.mag()*100)/start_ins_from_center.mag();
+    //println("change percent : "+ x);
+    //println("mag from start : "+ins_from_start.mag());
+    //println("Mark scale: "+ this.mark_to_edit.escala );
+    //println("Change mark scale: "+variation_in_scale);
     
-    int level = int(variation_in_scale / 10);
-    println("Level: "+level);
+    //int level = int(variation_in_scale / 10);
+    //println("Level: "+level);
     
-    
+    this.mark_to_edit.changeEscala( x );
   
   }
   
@@ -137,6 +144,7 @@ class PadraoRitmo{
             mark = (Mark)marcas[i];
             this.instrument_start_pos_x = this.instrumento.screen_pos_x;
             this.instrument_start_pos_y = this.instrumento.screen_pos_y;
+            this.start_ins_from_center = PVector.sub( screenCenter, this.instrumento.pos ); 
             return mark;
           }
       

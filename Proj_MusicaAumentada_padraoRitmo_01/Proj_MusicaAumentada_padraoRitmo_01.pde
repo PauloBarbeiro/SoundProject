@@ -20,6 +20,7 @@ Instrumento in1;
 int pr_width = 40;
 int pr_height = 5;
 
+PVector screenCenter;
 
 //ferencias de notas para Osciladores =======================================
 float n_do =261.6;
@@ -30,6 +31,17 @@ float n_fa =394;
 float n_sol=392;
 float n_la =440;
 float n_si =495;
+
+float[] full_scale = { n_do, n_re, n_mi, n_fa, n_sol, n_la, n_si };
+/*
+full_scale[0] = n_do;
+full_scale[1] = n_re;
+full_scale[2] = n_mi;
+full_scale[3] = n_fa;
+full_scale[4] = n_sol;
+full_scale[5] = n_la;
+full_scale[6] = n_si;
+//*/
 
 //valor do intervalo de repetição = marcador id 0 ===========================
 // intervalo em milisegundos
@@ -59,6 +71,8 @@ void setup() {
     size(640, 480);
     background(0);
     
+    screenCenter = new PVector( width/2, height/2 );
+    
     // Create and start the sine oscillator.
     sine = new SinOsc(this);
     sine.amp(amp);
@@ -87,6 +101,7 @@ void setup() {
     //connecta padrao e instrumento
     pr1.instrumento = in1;
     in1.padrao = pr1;
+    
 }
 
 void draw() {

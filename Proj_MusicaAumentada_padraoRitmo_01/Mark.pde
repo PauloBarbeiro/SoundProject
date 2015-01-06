@@ -3,6 +3,8 @@ class Mark{
   float posicao = 0;
   float escala  = 0;
   float duracao = 0;
+  float posicao_visual_y = 0;
+  float indice_de_alteracao = 5;
   
   Mark(float pos, float esc, float dur){
     //float pos = metronomo/4;
@@ -17,7 +19,7 @@ class Mark{
       //play note
       //println("play note: "+this.posicao);
       sine.freq(this.escala);
-      sine.amp(amp);
+      //sine.amp(amp);
     }
     else{
       //not play note
@@ -26,10 +28,19 @@ class Mark{
     }
   }
   
-  void changeEscala(int value){
-    if( value > 0 ){
-      int level = value/10;
-      
+  void changeEscala(float value){
+    //println("MARCA changeEscala");
+    int v = int(value);
+    
+    if( v > 0 ){
+      int level = v/10;
+      //println(level);
+      //level = level+2;//isso é necessário, se houver a necessidade de não aproximar o intrum. do centro.
+      if( level > -1 && level < 7 ){
+        println( "final Scale : "+ full_scale[level] );
+        this.posicao_visual_y = indice_de_alteracao * level;
+        println(" pos visual: "+this.posicao_visual_y);
+      }
     }
     else{
       
