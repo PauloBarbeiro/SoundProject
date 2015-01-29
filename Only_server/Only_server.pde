@@ -46,7 +46,7 @@ void removeTuioObject(TuioObject tobj) {
 
 // called when an object is moved
 void updateTuioObject (TuioObject tobj) {
-  //println("update object "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" angle: "+tobj.getAngle()+" "+tobj.getMotionSpeed()+" "+tobj.getRotationSpeed()+" "+tobj.getMotionAccel()+" "+tobj.getRotationAccel());
+  println("update object "+tobj.getSymbolID()+" ("+tobj.getSessionID()+") "+tobj.getX()+" "+tobj.getY()+" angle: "+tobj.getAngle()+" "+tobj.getMotionSpeed()+" "+tobj.getRotationSpeed()+" "+tobj.getMotionAccel()+" "+tobj.getRotationAccel());
 
   
   //valores básicos
@@ -56,7 +56,7 @@ void updateTuioObject (TuioObject tobj) {
   float diff = ang_before - current_ang;
   float abs_diff = abs(diff);
 
-  String message = str(tobj.getSymbolID())+"#"+str(tobj.getX())+"#"+str(tobj.getY())+"#"+str(tobj.getAngle());
+  String message = str(tobj.getSymbolID())+"#"+str(tobj.getX())+"#"+str(tobj.getY())+"#"+str(tobj.getAngle())+"#"+str(ang);//+"#"+str(diff)+"#"+str(abs_diff);
   String ip = "localhost";
   int port = 9998;
 
@@ -104,7 +104,7 @@ void updateTuioObject (TuioObject tobj) {
     //if( metronomo <= 0 ) metronomo = 0; 
     //println("METRONOMO: "+metronomo);
     }//diff != 0
-  }//metronomo id
+  }//metronomo id */
   
   
   
