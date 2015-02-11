@@ -57,10 +57,12 @@ void updateTuioObject (TuioObject tobj) {
   float abs_diff = abs(diff);
 
   String message = str(tobj.getSymbolID())+"#"+str(tobj.getX())+"#"+str(tobj.getY())+"#"+str(tobj.getAngle())+"#"+str(ang);//+"#"+str(diff)+"#"+str(abs_diff);
-  String ip = "localhost";
+  String[] ip = {"192.168.0.234", "192.168.0.104", "192.168.0.105", "192.168.0.107", "192.168.0.109"};
   int port = 9998;
 
-  udp.send( message, ip, port );
+  for(int i = 0; i<ip.length; i++){
+    udp.send( message, ip[i], port );
+  }
   
   //metronomo
   if(false){
